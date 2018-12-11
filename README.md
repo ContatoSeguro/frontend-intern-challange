@@ -1,8 +1,8 @@
 # Desafio | Frontend
 
 Você deverá criar um **CRUD** apenas no **lado do cliente**, ou seja, irá manter as informações armazenadas no **LocalStorage** do navegador. Os campos que deverão ser utilizados são os seguintes:
-* Nome: obrigatório
-* E-mail: obrigatório
+* Nome: obrigatório para preenchimento
+* E-mail: obrigatório para preenchimento
 * Telefone: não obrigatório
 * Data de nascimento: não obrigatório
 * Cidade onde nasceu: não obrigatório
