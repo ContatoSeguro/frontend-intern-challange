@@ -1,0 +1,45 @@
+:root{
+  --main-bg-color: #222629;
+  --alt-bg-color: #474B4F;
+  --main-btn-color: #86C232;
+  --alt-btn-color: #61892F;
+  --alt2-btn-color: #61892F;
+}
+
+link{
+	color: black !important;
+}
+
+.bg-light{
+	background-color: var(--alt-bg-color) !important;
+}
+.bg-dark{
+	background-color: var(--main-bg-color) !important;
+}
+
+.nav{
+	border-bottom-color: var(--main-btn-color) !important;
+}
+
+.nav .nav-link{
+	color: white;
+	background-color: var(--main-bg-color) !important;
+	border-bottom-color: var(--main-btn-color) !important;
+}
+
+.nav-tabs .nav-link.active{
+	color: var(--main-btn-color) !important;
+	background-color: var(--alt-bg-color) !important;
+	border-color: var(--main-btn-color) !important;
+	border-bottom-color: var(--alt-bg-color) !important;
+}
+
+.tab-pane{
+	color:white !important;
+}
+
+.tab-pane.active{
+	background-color: var(--alt-bg-color) !important;
+}
+
+
