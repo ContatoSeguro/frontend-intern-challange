@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+  <head>
+    <!-- Icon e title -->
+    <title>Contato Seguro</title>
+    <link rel="icon" type="image/png" href="img/lg.png" />
+    <!-- tags Meta -->
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2 ,shrink-to-fit=no">
+  <meta name="theme-color" content="#dc3545">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#dc3545">
+  <meta name="msapplication-navbutton-color" content="#dc3545">
+  <meta name="description" content="CRUD No LocalStorage.">
+  <meta name="author" content="João Vítor dos Santos Fontoura">
+  <!-- Tags link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+      <!-- CSS Interno -->
+        <link rel="stylesheet" href="./css/master.css">
+
+        </head>
+  <body>
+    <center>
+      <div class=" mt-3 mx-auto">
+        <img src="img/lg.png" alt="contato seguro" title="contato seguro">
+      </div>
+
+    <div class="container divC mx-auto mt-5">
+      <form class="container form-inputs mx-auto pt-3" id="cadastroForm" action="index.html" method="post">
+          <div class="form-group mx-auto">
+            <div class="obr">
+              *
+            </div>
+            <input type="text" required="required" class="form-control txtNome" id="txtNome" name="txtNome" placeholder="Nome" value="">
+          </div>
+          <div class="form-group ">
+          <div class="obr">
+            *
+          </div>
+            <input type="email"name="txtEmail txtEmail" required="required" id="txtEmail"class="form-control" placeholder="Email" value="">
+          </div>
+          <div class="form-group ">
+            <input type="text" name="txtTelefone" id="txtTelefone" class="form-control" placeholder="Telefone" value="">
+          </div>
+          <div class="form-group">
+              <label for="txtDataNascimento" style="color:white;padding-right: 50%;" class="text-left">Data de Nascimento:</label>
+              <input type="date" name="txtDataNascimento" id="txtDataNascimento" class="form-control" id="txtDataNascimento" value="">
+          </div>
+          <div class="form-group">
+            <input type="text" name="txtCidade" placeholder="cidade" id="txtCidade" class="form-control" value="">
+          </div>
+          <div class="form-group">
+          <button type="submit" name="btnCadastrar" id="btnCadastrar" class="mx-auto btn btn-outline-danger form-control">Cadastrar</button>
+          </div>
+  </form>
+    </div>
+    </center>
+    <div class="divEdit container mx-auto mt-5 row esconde" id="select">
+      <table id="tblListar" class="mx-auto table table-striped table-bordered table-hover .table-responsive table-dark">
+
+      </table>
+    </div>
+  </body>
+  <!-- Tags script -->
+      <!-- CDN Bootstrap -->
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+      <!-- TOAST -->
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+      <!-- JS Interno -->
+          <script src="js/master.js"></script>
+          <script type="text/javascript" src="js/functions.js"></script>
+
+</html>
