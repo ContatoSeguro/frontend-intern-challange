@@ -1,6 +1,6 @@
 :root{
-  --main-bg-color: #222629;
-  --alt-bg-color: #474B4F;
+  --main-bg-color: #474B4F;
+  --alt-bg-color: #222629;
   --main-btn-color: #86C232;
   --alt-btn-color: #61892F;
   --alt2-btn-color: #61892F;
@@ -43,3 +43,24 @@ link{
 }
 
 
+.btn-outline-primary{
+	border-color: var(--main-btn-color);
+	color: var(--main-btn-color);
+}
+
+.btn-outline-primary:hover{
+	background-color: var(--alt-btn-color);
+	border-color: var(--alt-btn-color);
+	color: white;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):focus{
+	box-shadow: none !important;
+	background-color: var(--main-btn-color) !important;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active{
+	background-color: var(--alt-btn-color);
+	border-color: var(--alt-btn-color);
+	color: white;
+}
