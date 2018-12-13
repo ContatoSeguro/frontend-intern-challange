@@ -4,6 +4,7 @@
   --main-btn-color: #86C232;
   --alt-btn-color: #61892F;
   --alt2-btn-color: #61892F;
+  --txt-color: #FFF;
 }
 
 link{
@@ -22,7 +23,7 @@ link{
 }
 
 .nav .nav-link{
-	color: white;
+	color: var(--txt-color);
 	background-color: var(--main-bg-color) !important;
 	border-bottom-color: var(--main-btn-color) !important;
 }
@@ -35,7 +36,7 @@ link{
 }
 
 .tab-pane{
-	color:white !important;
+	color:var(--txt-color) !important;
 }
 
 .tab-pane.active{
@@ -51,16 +52,17 @@ link{
 .btn-outline-primary:hover{
 	background-color: var(--alt-btn-color);
 	border-color: var(--alt-btn-color);
-	color: white;
+	color: var(--txt-color);
 }
 
 .btn-outline-primary:not(:disabled):not(.disabled):focus{
 	box-shadow: none !important;
 	background-color: var(--main-btn-color) !important;
+	color: var(--txt-color);
 }
 
 .btn-outline-primary:not(:disabled):not(.disabled):active{
 	background-color: var(--alt-btn-color);
 	border-color: var(--alt-btn-color);
-	color: white;
+	color: var(--txt-color);
 }
