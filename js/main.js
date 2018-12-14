@@ -26,6 +26,12 @@ $(document).ready(this.displayInterns());
 function displayInterns(){
 	//retorna os estagiarios, caso existam, se não exibe html padrão
 	var interns = this.getInterns();
+	if($("#buscaNome").val() != ""){
+		interns = interns.filter(function(intern){
+			return intern['nome'].match($("#buscaNome").val());
+		});
+	}
+	
 	if(interns){
 		var html;
 		for(var i in interns){
