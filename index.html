@@ -12,7 +12,7 @@
 
 		<!-- MEU ESTILO -->
 		<link rel="stylesheet" href="css/custom.css">
-
+		<link rel="stylesheet" href="css/color1.css" id="color">
 		<title>Cadastro de Estagiários</title>
 	</head>
 	<body class="bg-light">
@@ -24,6 +24,9 @@
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" id="profile-tab" data-toggle="tab" href="#cadastro" role="tab" aria-controls="profile" aria-selected="false">Cadastrar</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="profile-tab" data-toggle="tab" href="#config" role="tab" aria-controls="profile" aria-selected="false">Configurações</a>
 			</li>
 		</ul>
 		<!-- Fim Menu -->
@@ -68,7 +71,7 @@
 			</div>
 
 			<!-- Cadastro de Estagiários -->
-			<div class="tab-pane" id="cadastro" role="tabpanel" aria-labelledby="profile-tab">
+			<div class="tab-pane" id="cadastro" role="tabpanel" aria-labelledby="cadastro-tab">
 				<div class="container py-5">
 					<form class="needs-validation" onsubmit="addIntern()">
 						<div class="form-group">
@@ -110,6 +113,20 @@
 					</form>
 					<!-- Fim do formulário -->
 
+				</div>
+			</div>
+			<div class="tab-pane" id="config" role="tabpanel" aria-labelledby="home-tab">
+				<div class="container py-5 justify-content-center">
+					<div class="row justify-content-center">
+						<h3>Selecione Estilo de Cor</h3>
+					</div>
+
+					<div class="row">
+						<button class='btn btn-outline-primary col' onclick="setColor(1)">Original</button>
+						<button class='btn btn-outline-primary col' onclick="setColor(2)">Contato Seguro</button>
+						<button class='btn btn-outline-primary col' onclick="setColor(3)">Maçã do Amor</button>
+						<button class='btn btn-outline-primary col' onclick="setColor(4)">Marshmallow</button>
+					</div>
 				</div>
 			</div>
 

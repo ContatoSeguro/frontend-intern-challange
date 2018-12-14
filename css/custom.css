@@ -1,14 +1,9 @@
-:root{
-  --main-bg-color: #474B4F;
-  --alt-bg-color: #222629;
-  --main-btn-color: #86C232;
-  --alt-btn-color: #61892F;
-  --alt2-btn-color: #61892F;
-  --txt-color: #FFF;
+link{
+	color: var(--txt-color2)black !important;
 }
 
-link{
-	color: black !important;
+.border-success{
+	border-color: var(--alt-btn-color)!important;
 }
 
 .bg-light{

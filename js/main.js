@@ -3,6 +3,22 @@ $(function () {
 	$('#myTab li:first-child a').tab('show');
 })
 
+function updateColor(){
+	sheet = localStorage.getItem('stylesheet');
+	if(sheet != undefined){
+		$("#color").remove();
+		$('head').append(sheet);
+	}
+}
+
+function setColor(id){
+	let sheet = `<link rel="stylesheet" href="css/color${id}.css" id="color">`;
+	localStorage.setItem('stylesheet', sheet);
+	this.updateColor();
+}
+
+$(document).ready(updateColor());
+
 function displayInterns(){
 	//retorna os estagiarios, caso existam, se não exibe html padrão
 	var interns = this.getInterns();
