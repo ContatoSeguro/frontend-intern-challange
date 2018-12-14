@@ -3,6 +3,7 @@ $(function () {
 	$('#myTab li:first-child a').tab('show');
 })
 
+//Atualiza a cor de fundo de acordo com localStorage
 function updateColor(){
 	sheet = localStorage.getItem('stylesheet');
 	if(sheet != undefined){
@@ -11,13 +12,16 @@ function updateColor(){
 	}
 }
 
+//Seta no localStorage qual cor usar
 function setColor(id){
 	let sheet = `<link rel="stylesheet" href="css/color${id}.css" id="color">`;
 	localStorage.setItem('stylesheet', sheet);
 	this.updateColor();
 }
 
+//Seta a cor que esta no storage assim que a pagina carregar
 $(document).ready(updateColor());
+$(document).ready(this.displayInterns());
 
 function displayInterns(){
 	//retorna os estagiarios, caso existam, se não exibe html padrão
@@ -132,19 +136,17 @@ function showEdit(id, index){
 			<div id="nasc${interns[index].id}"><input type="date" class="form-control px-2 my-2" id="nasc" placeholder="data de nasc" value="${interns[index].nasc}"></div>
 			<div id="cidade${interns[index].id}"><input type="text" class="form-control px-2 my-2" id="cidade" placeholder="Cidade" value="${interns[index].cidade}"></div>
 			<div class="d-flex">
-				<input type="submit" class="btn btn-outline-primary col mx-2" value="Salvar" onclick"teste()";>
+				<input type="submit" class="btn btn-outline-primary col mx-2" value="Salvar">
 				<button type="button" class="btn btn-outline-primary col mx-2" data-dismiss="modal">Cancelar</button>
 			</div>
 		</form>`
 	$("#editar").html(html);
 }
 
-function teste(){
-	alert("uou");
-}
-
+//Salva as alterações
 function saveIntern(index){
 	var interns = this.getInterns();
+		//repopula o objeto
 		Object.assign(
 			interns[index],
 			{
@@ -154,9 +156,10 @@ function saveIntern(index){
 				nasc: `${$('#nasc').val()}`,
 				cidade: `${$('#cidade').val()}`
 			});
+
+		//atualiza localStorage
 		localStorage.setItem('interns', JSON.stringify(interns));
 		this.displayInterns();
 }
 
 
-this.displayInterns();
