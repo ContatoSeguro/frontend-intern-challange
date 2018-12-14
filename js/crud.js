@@ -9,7 +9,7 @@ class MyCrud{
                 this._table = [];
                 //Em função de testes, gerei um array de objetos no arquivo chamado populate.js
                 //Caso queira utilizar, descomente o this._table = populate abaixo
-                // this._table = populate;
+                this._table = populate;
                 //Para limpar a tabela digite no console do navegador 'new MyCrud()._clear();'
             }
             else{
@@ -95,10 +95,12 @@ class View{
     }
     
     create(form){
+        //Cria o objeto e retorna false se os campos necessários
+        //não foram preenchidos, senão retorna true
         let reg = { };
         for(let inp of form){
             //Teste de campos obrigatorios
-            if(inp.hasAttribute("required") && MyCrud._isEmpty(inp)){ return; }
+            if(inp.hasAttribute("required") && MyCrud._isEmpty(inp)){ return false; }
             //Insere informações no objeto
             if(!(inp.getAttribute("type") == "submit" || inp.getAttribute("type") == "reset")){
                 reg[inp.getAttribute("name")] = inp.value;
@@ -107,6 +109,7 @@ class View{
         this.crud._create(reg);
         window.dispatchEvent(new Event("load"));
         form.reset();
+        return true;
     }
 
     raiseMessage(tbl, type){
@@ -114,17 +117,29 @@ class View{
         let div = document.createElement("div");
         if(type === "empty"){
             div.textContent = "Nenhum valor encontrado";
-            div.setAttribute("class", "alert alert-info");
+            div.setAttribute("class", "alert alert-secondary");
             tbl.appendChild(div);
             return;
         }
-        else if(type === "update"){
+        else if(type === "update-success"){
             div.textContent = "Registro editado!";
-            div.setAttribute("class", "alert alert-warning alert-dismissible fade show");
+            div.setAttribute("class", "alert alert-success alert-dismissible fade show");
+        }
+        else if(type === "update-fail"){
+            div.textContent = "Registro não pôde ser editado, verifique se os campos foram preenchidos corretamente.";
+            div.setAttribute("class", "alert alert-danger alert-dismissible fade show");
+        }
+        else if(type === "create-success"){
+            div.textContent = "Registro inserido com sucesso.";
+            div.setAttribute("class", "alert alert-success alert-dismissible fade show");
+        }
+        else if(type === "create-fail"){
+            div.textContent = "Registro não pôde ser inserido, verifique se os campos foram preenchidos corretamente.";
+            div.setAttribute("class", "alert alert-danger alert-dismissible fade show");
         }
         else if(type === "delete"){
             div.textContent = "Registro removido!";
-            div.setAttribute("class", "alert alert-danger alert-dismissible fade show");
+            div.setAttribute("class", "alert alert-warning alert-dismissible fade show");
             
         }
         div.setAttribute("role", "alert");
@@ -153,6 +168,7 @@ class View{
         let tr = document.createElement("tr");
         for(let key in lst[Object.keys(lst)[0]]){
             let th = document.createElement("th");
+            th.setAttribute("class", "text-capitalize");
             th.textContent = key;
             tr.appendChild(th);
         }
@@ -167,15 +183,33 @@ class View{
             tr = document.createElement("tr");
             for(let key in lst[i]){
                 let td = document.createElement("td");
-                td.textContent = lst[i][key];
+                //Transforma o formato padrao de data para o formato local
+                if(lst[i][key].match(/\d{4}-\d{2}-\d{2}/)){
+                    td.textContent = new Date(lst[i][key]).toLocaleDateString("pt-BR", {timeZone : "UTC"});
+                }
+                else{
+                    td.textContent = lst[i][key];
+                }
                 tr.appendChild(td);
             }
             //Gera o botão de update
             let td = document.createElement("td");
             let btn = document.createElement("button");
             let icon = document.createElement("i");
+            //Classes do Bootstrap
+            btn.setAttribute("class", "btn btn-primary m-1 float-right remove-row");
+            //Insere o value correspondente à posição na lista
+            btn.setAttribute("value", i);
+            //Classes do font awesome
+            icon.setAttribute("class", "fas fa-eraser");
+            btn.appendChild(icon);
+            td.appendChild(btn);
+            
+            //Gera o botão de delete
+            btn = document.createElement("button");
+            icon = document.createElement("i");
             //Classes e afins do Bootstrap
-            btn.setAttribute("class", "btn btn-primary m-1 update-row");
+            btn.setAttribute("class", "btn btn-primary m-1 float-right update-row");
             btn.setAttribute("data-toggle", "modal");
             btn.setAttribute("data-target", "#update-modal");
             //Insere o value correspondente à posição na lista
@@ -184,19 +218,7 @@ class View{
             icon.setAttribute("class", "fas fa-edit");
             btn.appendChild(icon);
             td.appendChild(btn);
-
-            //Gera o botão de delete
-            btn = document.createElement("button");
-            icon = document.createElement("i");
-            //Classes do Bootstrap
-            btn.setAttribute("class", "btn btn-primary m-1 remove-row");
-            //Insere o value correspondente à posição na lista
-            btn.setAttribute("value", i);
-            //Classes do font awesome
-            icon.setAttribute("class", "fas fa-eraser");
-            btn.appendChild(icon);
-            td.appendChild(btn);
-
+            
             tr.appendChild(td);
 
             tbl.appendChild(tr);
@@ -205,19 +227,27 @@ class View{
 
     fillForm(form, i){
         //Preenche formulario com as informações do item de posição i da lista
-        let reg = this.crud._read(i, 1)[0];
-        for(let inp of form){
-            if(!(inp.getAttribute("type") == "submit" || inp.getAttribute("type") == "reset")){
-                inp.value = reg[inp.getAttribute("name")];
+        form.reset();
+        let reg = this.crud._read(i, 1);
+        reg = reg[Object.keys(reg)[0]];
+        //Por algum motivo o efeito de transição do modal ta bugando os inputs de type date
+        //então tive que botar um delay antes de preencher
+        setTimeout(function(){
+            for(let inp of form){
+                if(!(inp.getAttribute("type") == "submit" || inp.getAttribute("type") == "reset")){
+                    inp.value = reg[inp.getAttribute("name")];
+                }
             }
-        }
+        }, 210);
     }
 
     update(form, i){
+        //Atualiza com os campos especificados retorna false se os
+        //campos necessários não foram preenchidos, senão retorna true
         let reg = { };
         for(let inp of form){
             //Teste de campos obrigatorios
-            if(inp.hasAttribute("required") && MyCrud._isEmpty(inp)){ return; }
+            if(inp.hasAttribute("required") && MyCrud._isEmpty(inp)){ return false; }
             //Insere informações no objeto
             if(!(inp.getAttribute("type") == "submit" || inp.getAttribute("type") == "reset")){
                 reg[inp.getAttribute("name")] = inp.value;
@@ -226,6 +256,7 @@ class View{
         this.crud._update(i, reg);
         window.dispatchEvent(new Event("load"));
         form.reset();
+        return true;
     }
 
 
@@ -241,17 +272,24 @@ var view = new View();
 //Eventos com as ações do objeto View
 
 document.getElementById("c-submit").addEventListener("click", function(){
-    view.create(this.form);
     let table = document.getElementById("table-list");
-    console.log(this.form);
-});
+    if(view.create(this.form)){
+        view.raiseMessage(table, "create-success");
+    }
+    else{
+        view.raiseMessage(table, "create-fail");
+    };
+}, false);
 
 document.getElementById("u-submit").addEventListener("click", function(){
-    view.update(this.form, this.getAttribute("value"));
     let table = document.getElementById("table-list");
-    view.raiseMessage(table, "update");
-    console.log(this.form);
-});
+    if(view.update(this.form, this.getAttribute("value"))){
+        view.raiseMessage(table, "update-success");
+    }
+    else{
+        view.raiseMessage(table, "update-fail");
+    };
+}, false);
 
 window.addEventListener("load", function(){
     let table = document.getElementById("table-list");
@@ -261,35 +299,35 @@ window.addEventListener("load", function(){
         btn.addEventListener("click", function(){
             document.getElementById("u-submit").setAttribute("value", this.getAttribute("value"));
             view.fillForm(document.getElementById("update"), this.value);
-        });
+        }, false);
     }
     for(let btn of table.querySelectorAll("button.remove-row")){
-        btn.addEventListener("click", function(e){
-            console.log(e);
+        btn.addEventListener("click", function(){
             view.delete(this);
             view.raiseMessage(document.getElementById("table-list"), "delete");
-        });
+        }, false);
     }
-});
+  }, false);
 
-function autosearch(){
+function search(){
     let table = document.getElementById("table-list");
     view.list(table, 0, document.getElementById("search-options").value, document.getElementById("r-search").value);
     for(let btn of table.querySelectorAll("button.update-row")){
         btn.addEventListener("click", function(){
             document.getElementById("u-submit").setAttribute("value", this.getAttribute("value"));
-        });
+            view.fillForm(document.getElementById("update"), this.value);
+        }, false);
     }
     for(let btn of table.querySelectorAll("button.remove-row")){
         btn.addEventListener("click", function(){
             view.delete(this);
             view.raiseMessage(document.getElementById("table-list"), "delete");
-        });
+        }, false);
     }
 }
 
-document.getElementById("r-search").addEventListener("keyup", autosearch);
-document.getElementById("r-submit").addEventListener("click", autosearch);
+document.getElementById("r-search").addEventListener("keyup", search, false);
+document.getElementById("r-submit").addEventListener("click", search, false);
 
 //Input masks
 function telefonemask(e) {
@@ -303,11 +341,5 @@ function telefonemask(e) {
         e.target.value = !x[2] ? x[1] : '(' + x[1] + ') '+ x[2] + (x[3] ? '-' + x[3] : '');
     }
 }
-function datemask(e) {
-    var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,2})(\d{0,4})/);
-    e.target.value = !x[2] ? x[1] : x[1] + '/' + x[2] + (x[3] ? '/' + x[3] : '');
-}
 document.getElementById('c-telefone').addEventListener('input', telefonemask);
 document.getElementById('u-telefone').addEventListener('input', telefonemask);
-document.getElementById('c-data-nasc').addEventListener('input', datemask);
-document.getElementById('u-data-nasc').addEventListener('input', datemask);
